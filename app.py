@@ -33,6 +33,7 @@ with st.container():
     with col1:
         st.subheader('Etapa #1: Arquivos.')
         st.caption('Escolhas os arquivos csv que contém os campos chaves')
+        st.caption('Os arquivos csv precisam ser separados por virgulas')
         st.caption('Atenção, não envie informações sensiveis, como emails, telefone, numero de documentos. Anonimize seus dados antes.')
 
         arquivos = st.file_uploader("Escolha os arquivos CSV", type=['csv'], accept_multiple_files=True)
@@ -45,7 +46,13 @@ with st.container():
 
         if arquivos:
             for id, arquivo in arquivos.items():
-                coluna_selecionada = st.selectbox('Selecione a coluna', arquivo['dataframe'].columns, key=id, index=None, placeholder='Escolha uma das colunas')
+                coluna_selecionada = st.selectbox(
+                    f'Selecione a coluna do arquivo {id} - {arquivo["nome_arquivo"]}',
+                    arquivo['dataframe'].columns,
+                    key=id,
+                    index=None,
+                    placeholder='Escolha uma das colunas')
+                
                 seta_colunas_selecionadas(id,coluna_selecionada)
 
 
